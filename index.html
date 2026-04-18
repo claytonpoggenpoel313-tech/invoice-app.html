@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Invoice Generator</title>
+
+    <style>
+        body {
+            font-family: Arial;
+            background: #f4f6f8;
+        }
+
+        .container {
+            max-width: 500px;
+            margin: 40px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+        }
+
+        button {
+            width: 100%;
+            padding: 10px;
+            margin-top: 10px;
+            background: #007bff;
+            color: white;
+            border: none;
+        }
+
+        .invoice {
+            margin-top: 20px;
+            padding: 10px;
+            background: #eee;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="container">
+    <h2>Invoice Generator</h2>
+
+    <input type="text" id="client" placeholder="Client Name">
+    <input type="text" id="service" placeholder="Service Description">
+    <input type="number" id="amount" placeholder="Amount">
+
+    <button onclick="addItem()">Add Item</button>
+    <button onclick="generateInvoice()">Generate Invoice</button>
+
+    <div class="invoice" id="invoice"></div>
+</div>
+
+<script>
+let items = [];
+
+function addItem() {
+    let service = document.getElementById("service").value;
+    let amount = Number(document.getElementById("amount").value);
+
+    if (!service || !amount) {
+        alert("Fill all fields");
+        return;
+    }
+
+    items.push({ service, amount });
+
+    document.getElementById("service").value = "";
+    document.getElementById("amount").value = "";
+}
+
+function generateInvoice() {
+    let client = document.getElementById("client").value;
+    let total = 0;
+    let output = `<h3>Invoice for ${client}</h3><ul>`;
+
+    items.forEach(i => {
+        total += i.amount;
+        output += `<li>${i.service} - R${i.amount}</li>`;
+    });
+
+    output += `</ul><strong>Total: R${total}</strong>`;
+
+    document.getElementById("invoice").innerHTML = output;
+}
+</script>
+
+</body>
+</html>
